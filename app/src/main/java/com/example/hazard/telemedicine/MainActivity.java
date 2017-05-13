@@ -13,29 +13,38 @@ import android.widget.TextView;
 
 import com.example.hazard.telemedicine.adapter.TabPagerFragmentAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initToolbar();
         initTabs();
     }
 
+    private void initToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
     private void initTabs() {
-        tabLayout = (TabLayout) findViewById(R.id.main_tabs);
         viewPager = (ViewPager) findViewById(R.id.main_pager);
-        TabPagerFragmentAdapter adapter = new TabPagerFragmentAdapter(getSupportFragmentManager());
+        TabPagerFragmentAdapter adapter = new TabPagerFragmentAdapter(getSupportFragmentManager()   );
         viewPager.setAdapter(adapter);
+        tabLayout = (TabLayout) findViewById(R.id.main_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.getTabAt(Const.PROFILE_TAB).setIcon(R.drawable.ic_person_black_24dp);
         tabLayout.getTabAt(Const.APPEAL_TAB).setIcon(R.drawable.ic_healing_black_24dp);
         tabLayout.getTabAt(Const.MESSAGES_TAB).setIcon(R.drawable.ic_message_black_24dp);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setOnTabSelectedListener(this);
     }
 
     @Override
@@ -56,5 +65,20 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        viewPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }

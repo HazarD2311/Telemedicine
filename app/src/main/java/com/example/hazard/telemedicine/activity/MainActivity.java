@@ -1,17 +1,17 @@
-package com.example.hazard.telemedicine;
+package com.example.hazard.telemedicine.activity;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import com.example.hazard.telemedicine.adapter.TabPagerFragmentAdapter;
+import com.example.hazard.telemedicine.Const;
+import com.example.hazard.telemedicine.R;
+import com.example.hazard.telemedicine.adapter.TabsAdapter;
+
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     private void initTabs() {
         viewPager = (ViewPager) findViewById(R.id.main_pager);
-        TabPagerFragmentAdapter adapter = new TabPagerFragmentAdapter(getSupportFragmentManager()   );
+        TabsAdapter adapter = new TabsAdapter(getSupportFragmentManager()   );
         viewPager.setAdapter(adapter);
         tabLayout = (TabLayout) findViewById(R.id.main_tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -59,9 +59,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
         switch (item.getItemId()) {
             case R.id.action_settings:
-                break;
-            case R.id.action_exit:
-                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

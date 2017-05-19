@@ -5,6 +5,9 @@
     <!--Тулбар-->
     <string name="toolbar_settings">Настройки</string>
     <string name="toolbar_exit">Выход</string>
+    <string name="send">Отправить</string>
+    <string name="sign_in">Вход</string>
+    <string name="logout">Выход из аккаунта</string>
 
     <!--Названия табов-->
 

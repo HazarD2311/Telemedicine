@@ -5,13 +5,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.hazard.telemedicine.Const;
+import com.example.hazard.telemedicine.fragment.ChatFragment;
 import com.example.hazard.telemedicine.fragment.ExampleFragment;
+import com.example.hazard.telemedicine.fragment.ProfileFragment;
 
-public class TabPagerFragmentAdapter extends FragmentPagerAdapter {
+public class TabsAdapter extends FragmentPagerAdapter {
 
     private String[] tabs;
 
-    public TabPagerFragmentAdapter(FragmentManager fm) {
+    public TabsAdapter(FragmentManager fm) {
         super(fm);
         tabs = new String[] {
                 Const.PROFILE_TAB_NAME,
@@ -24,11 +26,11 @@ public class TabPagerFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case Const.PROFILE_TAB:
-                return ExampleFragment.getInstance();
+                return ProfileFragment.getInstance();
             case Const.APPEAL_TAB:
                 return ExampleFragment.getInstance();
             case Const.MESSAGES_TAB:
-                return ExampleFragment.getInstance();
+                return ChatFragment.getInstance();
         }
         return null;
     }

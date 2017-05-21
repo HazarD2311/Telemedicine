@@ -10,8 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +19,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.hazard.telemedicine.Const;
 import com.example.hazard.telemedicine.R;
 import com.example.hazard.telemedicine.activity.AuthorizationActivity;
-import com.example.hazard.telemedicine.model.ChatMessage;
+import com.example.hazard.telemedicine.logic.ProfileSingleton;
+import com.example.hazard.telemedicine.logic.model.ChatMessage;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -49,11 +47,6 @@ public class ChatFragment extends Fragment {
     private ProgressBar progressBar;
     private Button sendButton;
     private EditText msgEditText;
-    private String username;
-    private String photoUrl;
-    private GoogleApiClient googleApiClient;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseUser firechatUser;
     private View view;
 
     public static ChatFragment getInstance() {
@@ -131,54 +124,10 @@ public class ChatFragment extends Fragment {
         messageRecyclerView.setLayoutManager(linearLayoutManager);
         messageRecyclerView.setAdapter(firebaseAdapter);
 
-        initAuth();
         initSend();
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        googleApiClient.connect();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        googleApiClient.disconnect();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_logout:
-                firebaseAuth.signOut();
-                Auth.GoogleSignInApi.signOut(googleApiClient);
-                username = DEFAULT_NAME;
-                startActivity(new Intent(getActivity(), AuthorizationActivity.class));
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-
-    }
-
-    private void initAuth() {
-        googleApiClient = new GoogleApiClient.Builder(getContext())
-                .addApi(Auth.GOOGLE_SIGN_IN_API)
-                .build();
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        firechatUser = firebaseAuth.getCurrentUser();
-        if (firechatUser == null) {
-            startActivity(new Intent(getActivity(), AuthorizationActivity.class));
-            return;
-        } else {
-            username = firechatUser.getDisplayName();
-            if (firechatUser.getPhotoUrl() != null) {
-                photoUrl = firechatUser.getPhotoUrl().toString();
-            }
-        }
-    }
 
     private void initSend() {
         msgEditText = (EditText) view.findViewById(R.id.msgEditText);
@@ -208,8 +157,8 @@ public class ChatFragment extends Fragment {
             public void onClick(View v) {
                 ChatMessage friendlyMessage = new
                         ChatMessage(msgEditText.getText().toString(),
-                        username,
-                        photoUrl);
+                        ProfileSingleton.getInstance().getUsername(),
+                        ProfileSingleton.getInstance().getPhotoUrl());
                 simpleFirechatDatabaseReference.child("messages")
                         .push().setValue(friendlyMessage);
                 msgEditText.setText("");

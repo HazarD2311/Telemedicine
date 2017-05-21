@@ -8,6 +8,10 @@
     <string name="send">Отправить</string>
     <string name="sign_in">Вход</string>
     <string name="logout">Выход из аккаунта</string>
+    <string name="welcome">Здравствуйте!</string>
+    <string name="i_am_doctor">Я врач</string>
+    <string name="i_am_patient">Я пациент</string>
+    <string name="welcome_review">Добро пожаловать в Телемедицину</string>
 
     <!--Названия табов-->
 

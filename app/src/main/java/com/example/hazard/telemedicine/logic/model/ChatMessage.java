@@ -1,4 +1,4 @@
-package com.example.hazard.telemedicine.model;
+package com.example.hazard.telemedicine.logic.model;
 
 public class ChatMessage {
 

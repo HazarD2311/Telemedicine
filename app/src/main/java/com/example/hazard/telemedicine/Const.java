@@ -2,6 +2,9 @@ package com.example.hazard.telemedicine;
 
 public class Const {
 
+    //Bundle
+    public static final String PATIENT_NAME = "patientName";
+
     //Welcome
     public static final int WELCOME_FRAGMENT = 0;
     public static final int DOCTOR_OR_PATIENT_FRAGMENT = 1;

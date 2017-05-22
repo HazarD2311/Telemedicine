@@ -1,5 +1,6 @@
 package com.example.hazard.telemedicine.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,8 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.hazard.telemedicine.Const;
 import com.example.hazard.telemedicine.R;
+import com.example.hazard.telemedicine.activity.ChatDoctorActivity;
+import com.example.hazard.telemedicine.adapter.TaskViewHolder;
 import com.example.hazard.telemedicine.logic.model.DoctorTask;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,9 +30,7 @@ public class DoctorTasksFragment extends Fragment {
     private RecyclerView recyclerView;
     private FirebaseRecyclerAdapter<DoctorTask, TaskViewHolder>
             doctorTasksAdapter;
-    private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
-    private FirebaseUser firebaseUser;
     private View view;
 
     public static DoctorTasksFragment getInstance() {
@@ -37,19 +40,6 @@ public class DoctorTasksFragment extends Fragment {
 
         return fragment;
     }
-
-    private static class TaskViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView complaintTitle, username, date;
-
-        public TaskViewHolder(View itemView) {
-            super(itemView);
-            complaintTitle = (TextView) itemView.findViewById(R.id.doctor_task_complaint_title);
-            username = (TextView) itemView.findViewById(R.id.doctor_task_username);
-            date = (TextView) itemView.findViewById(R.id.doctor_task_date);
-        }
-    }
-
 
     @Nullable
     @Override
@@ -83,6 +73,27 @@ public class DoctorTasksFragment extends Fragment {
                 viewHolder.complaintTitle.setText(task.getComplaintTitle());
                 viewHolder.username.setText(task.getUsername());
                 viewHolder.date.setText(task.getDate());
+            }
+
+            @Override
+            public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                TaskViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
+                viewHolder.setOnClickListener(new TaskViewHolder.ClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        //переход к чату с пацентом
+                        String namePatient = getItem(position).getUsername();
+                        Intent intent = new Intent(getActivity(), ChatDoctorActivity.class);
+                        intent.putExtra(Const.PATIENT_NAME, namePatient);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+                        //TODO удаление из бд, если задача выполнена
+                    }
+                });
+                return viewHolder;
             }
         };
     }

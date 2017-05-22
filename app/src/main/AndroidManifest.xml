@@ -25,6 +25,7 @@
         <activity
             android:name=".welcome.WelcomeActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.ChatDoctorActivity"></activity>
     </application>
 
 </manifest>

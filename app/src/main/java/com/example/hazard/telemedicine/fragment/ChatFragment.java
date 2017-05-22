@@ -1,6 +1,5 @@
 package com.example.hazard.telemedicine.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,20 +18,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.hazard.telemedicine.R;
-import com.example.hazard.telemedicine.activity.AuthorizationActivity;
 import com.example.hazard.telemedicine.logic.ProfileSingleton;
 import com.example.hazard.telemedicine.logic.model.ChatMessage;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.hazard.telemedicine.Const.DEFAULT_NAME;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ChatFragment extends Fragment {
@@ -48,6 +40,10 @@ public class ChatFragment extends Fragment {
     private Button sendButton;
     private EditText msgEditText;
     private View view;
+
+    public ChatFragment() {
+
+    }
 
     public static ChatFragment getInstance() {
         Bundle args = new Bundle();
@@ -88,7 +84,7 @@ public class ChatFragment extends Fragment {
                 ChatMessage.class,
                 R.layout.item_chat_message,
                 FirechatMsgViewHolder.class,
-                simpleFirechatDatabaseReference.child("messages")) {
+                simpleFirechatDatabaseReference.child("messages").child("B")) {
             @Override
             protected void populateViewHolder(FirechatMsgViewHolder viewHolder, ChatMessage friendlyMessage, int position) {
                 progressBar.setVisibility(ProgressBar.INVISIBLE);
@@ -104,6 +100,7 @@ public class ChatFragment extends Fragment {
                             .load(friendlyMessage.getPhotoUrl())
                             .into(viewHolder.userImageView);
                 }
+
             }
         };
 
@@ -159,7 +156,7 @@ public class ChatFragment extends Fragment {
                         ChatMessage(msgEditText.getText().toString(),
                         ProfileSingleton.getInstance().getUsername(),
                         ProfileSingleton.getInstance().getPhotoUrl());
-                simpleFirechatDatabaseReference.child("messages")
+                simpleFirechatDatabaseReference.child("messages").child("B")
                         .push().setValue(friendlyMessage);
                 msgEditText.setText("");
             }

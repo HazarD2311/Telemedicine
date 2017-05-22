@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.hazard.telemedicine.Const;
 import com.example.hazard.telemedicine.fragment.ChatFragment;
+import com.example.hazard.telemedicine.fragment.DoctorTasksFragment;
 import com.example.hazard.telemedicine.fragment.ExampleFragment;
 import com.example.hazard.telemedicine.fragment.ProfileFragment;
 
@@ -28,7 +29,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
             case Const.PROFILE_TAB:
                 return ProfileFragment.getInstance();
             case Const.APPEAL_TAB:
-                return ExampleFragment.getInstance();
+                return DoctorTasksFragment.getInstance();
             case Const.MESSAGES_TAB:
                 return ChatFragment.getInstance();
         }

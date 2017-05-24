@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         Boolean isPatient = SharedPref.getSharedPreferences().getBoolean(Const.IS_PATIEND, false);
 
         if (!isDoctor && !isPatient) {
-            Intent intent = new Intent(this, DoctorOrPatientFragment.class);
+            Intent intent = new Intent(this, AuthorizationActivity.class);
             startActivity(intent);
         }
     }

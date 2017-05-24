@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class DoctorTasksFragment extends Fragment {
 
     private static final int LAYOUT = R.layout.fragment_doctor_tasks;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
     private FirebaseRecyclerAdapter<DoctorTask, TaskViewHolder>
             doctorTasksAdapter;
     private DatabaseReference databaseReference;
@@ -46,6 +48,7 @@ public class DoctorTasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false);
 
+        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar_doctor_tasks);
         initRecycleView();
 
         return view;
@@ -70,6 +73,7 @@ public class DoctorTasksFragment extends Fragment {
         ) {
             @Override
             protected void populateViewHolder(TaskViewHolder viewHolder, DoctorTask task, int position) {
+                progressBar.setVisibility(ProgressBar.INVISIBLE);
                 viewHolder.complaintTitle.setText(task.getComplaintTitle());
                 viewHolder.username.setText(task.getUsername());
                 viewHolder.date.setText(task.getDate());

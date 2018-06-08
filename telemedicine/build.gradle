@@ -1,0 +1,122 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        applicationId rootProject.ext.applicationId
+        versionCode rootProject.ext.moduleVersionCode
+        versionName rootProject.ext.moduleVersionName
+
+        setProperty("archivesBaseName", "$applicationName-$moduleVersionName-($moduleVersionCode)")
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    //-------------------------------------- versions ----------------------------------------------
+
+    //Testing Library, Apt Versions
+    def mockitoVersion = '1.10.19'
+    def assertJVersion = '3.5.1'
+
+    //------------------------------------ dependencies --------------------------------------------
+
+    implementation "ru.surfstudio.android:core-app:${moduleVersionName}"
+    implementation "ru.surfstudio.android:core-mvp:${moduleVersionName}"
+    implementation "ru.surfstudio.android:core-ui:${moduleVersionName}"
+    implementation "ru.surfstudio.android:analytics:${moduleVersionName}"
+    implementation "ru.surfstudio.android:firebase-analytics:${moduleVersionName}"
+    implementation "ru.surfstudio.android:network:${moduleVersionName}"
+    implementation "ru.surfstudio.android:filestorage:${moduleVersionName}"
+    implementation "ru.surfstudio.android:push:${moduleVersionName}"
+    implementation "ru.surfstudio.android:dagger-scope:${moduleVersionName}"
+    implementation "ru.surfstudio.android:logger:${moduleVersionName}"
+    implementation "ru.surfstudio.android:converter-gson:${moduleVersionName}"
+    implementation "ru.surfstudio.android:easyadapter:${moduleVersionName}"
+    implementation "ru.surfstudio.android:imageloader:${moduleVersionName}"
+    implementation "ru.surfstudio.android:animations:${moduleVersionName}"
+    implementation "ru.surfstudio.android:picture-provider:${moduleVersionName}"
+    implementation "ru.surfstudio.android:app-migration:${moduleVersionName}"
+    implementation "ru.surfstudio.android:message-controller:${moduleVersionName}"
+    implementation "ru.surfstudio.android:connection:${moduleVersionName}"
+    implementation "ru.surfstudio.android:custom-view:${moduleVersionName}"
+    implementation "ru.surfstudio.android:datalist-limit-offset:${moduleVersionName}"
+    implementation "ru.surfstudio.android:datalist-page-count:${moduleVersionName}"
+    implementation "ru.surfstudio.android:mvp-dialog:${moduleVersionName}"
+    implementation "ru.surfstudio.android:mvp-widget:${moduleVersionName}"
+    implementation "ru.surfstudio.android:recycler-extension:${moduleVersionName}"
+    implementation "ru.surfstudio.android:rx-extension:${moduleVersionName}"
+    implementation "ru.surfstudio.android:shared-pref:${moduleVersionName}"
+    implementation "ru.surfstudio.android:util-ktx:${moduleVersionName}"
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    implementation "com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion"
+
+    implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
+    implementation 'com.google.guava:guava:23.0-android'
+
+    //kotlin
+    implementation "org.jetbrains.anko:anko-common:$ankoVersion"
+
+    //firebase
+    api "com.google.firebase:firebase-core:${playServicesVersion}"
+//    implementation "com.google.firebase:firebase-messaging:${playServicesVersion}"
+
+    //--------------------------------- test dependencies ------------------------------------------
+
+    //tests
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    testImplementation "junit:junit:$junitVersion"
+
+    //unit test
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.assertj:assertj-core:$assertJVersion"
+
+    //instrumental test
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    androidTestImplementation "com.android.support:support-annotations:$appcompatVersion"
+    androidTestImplementation "com.android.support.test:runner:$testRunnerVersion"
+
+    implementation 'com.google.code.findbugs:jsr305:3.0.1'
+}
+
